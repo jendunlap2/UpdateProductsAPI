@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Edit Product {{ product.name }}</h1>
+
+    <form action="" method="post">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <fieldset>
+                {{ form.name.label }}
+                {{ form.name(class='form-control', value=product.name) }}
+            </fieldset>
+            <fieldset>
+                {{ form.price.label }}
+                {{ form.price(class='form-control', value=product.price) }}
+            </fieldset>
+            <fieldset>
+                {{ form.image_url.label }}
+                {{ form.image_url(class='form-control', value=product.image_url) }}
+            </fieldset>
+            <fieldset>
+                {{ form.category_id.label }}
+                {{ form.category_id(class='form-control', value=product.category_id) }}
+            </fieldset>
+        </div>
+        {{ form.submit(class='btn btn-secondary') }}
+    </form>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProductModal">
+        Delete Product
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="deleteProductModalLabel">Delete {{ product.name }}?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            You are about to delete {{ product.name }}. This action cannot be undone. Are you sure?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, I am not sure</button>
+            <a href="{{ url_for('delete_product', prod_id=product.id) }}" class="btn btn-danger">Yes, delete it!</a>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
